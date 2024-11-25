@@ -1,4 +1,13 @@
-# DS2482-800
+# Fork Description
+Todo:
+- bring communication with the controller and thermometers in accordance with the datasheet
+- add support of software bitbang I2C library
+- write init for thermometers
+- optimization, etc.
+
+The original library did not have the support of the multichannel of the DS-800 chip, so the work is focused on the support of a single-channel controller.
+
+# Original Description
  Communication driver for DS2482-800 working with DS18B20 sensors
  
  8-Channel 1-Wire Master - https://datasheets.maximintegrated.com/en/ds/DS2482-800.pdf
