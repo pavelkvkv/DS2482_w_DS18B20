@@ -1,7 +1,9 @@
 # Fork Description
 Normal stable work with software i2C has been achieved, one reading in a resolution of 8 bits takes 134 ms.
+
 Todo:
 - separate temperature measurement / reading for significant perfomance gain
+
 Done:
 - bring communication with the controller and thermometers in accordance with the datasheet
 - add support of software bitbang I2C library
