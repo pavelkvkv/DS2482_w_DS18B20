@@ -6,7 +6,7 @@ Todo:
 
 Done:
 - bring communication with the controller and thermometers in accordance with the datasheet
-- add support of software bitbang I2C library
+- add support of software bitbang I2C library - https://github.com/pavelkvkv/soft-i2c-at32
 - write init for thermometers
 - optimization, etc.
 
