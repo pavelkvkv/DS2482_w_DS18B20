@@ -6,9 +6,6 @@
 #include "sw_i2c.h"
 
 
-
-
-
 // DS2480 config structure
 typedef struct __attribute__((packed, aligned(1))) 
 {
@@ -39,7 +36,6 @@ typedef struct __attribute__((packed, aligned(1)))
     }config;
     }config;
 } DS18B20Config;
-
 
 
 

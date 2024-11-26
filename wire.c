@@ -3,7 +3,7 @@
  * Библиотека, которая реализует протокол 1-Wire через I2C-адаптер DS2482.
  * Поддержка опроса и сканирования термодатчиков DS18B20
  * 
- * Автор идеи: bayesiandog
+ * Автор идеи: https://github.com/bayesiandog/DS2482-800
  * Режиссёр: Павел Карягин
  * В ролях: DS2482-100 (и -800), SW_I2C_Lib
 */
@@ -59,7 +59,6 @@
 #define BSY_TIMEOUT 10
 
 static unsigned char ROM_NO[8]  = {0};
-//static unsigned char OWID[OWID_MAX_ELEMENTS][8] = {0};
 
 union
 {
@@ -111,7 +110,7 @@ int OWGetIDs(u64 *IDs, size_t len)
  * Инициализирует контроллер 1-Wire, сканирует датчики и прописывает в них настройки
  * @return количество найденных датчиков
  */
-int OWInit()
+int OWInit(void)
 {
 	logI("");
 	DS2480Config DSconfig_default = 
@@ -217,14 +216,9 @@ static bool OWReset(void)
 u8 OWDReset(void)
 {
 	//logI("");
-	//unsigned char buff[1];
 	u8 status;	
 
-	// checking if 1-Wire busy
-	//if(OWBusyWait() == 1) { return 1; }
-
 	SW_I2C_Write_8addr(i2c_bus, OWDAddress, OWDSDeviceResetCommand, 0, 0);
-	//SW_I2C_Read_Noaddr(i2c_bus, OWDAddress, &status, 1);
 
 	if(OWBusyWait(&status) == 1) { return 1; }
 
@@ -428,7 +422,7 @@ u16 DS18B20_readTemp(int deviceNumber)
 
 //--------------------------------------------------------------------------
 // Perform a search for all devices on the 1-Wire network  	  
-int OWDeviceSearch()
+int OWDeviceSearch(void)
 {
 	u8 result = 0;
 
@@ -452,7 +446,7 @@ int OWDeviceSearch()
 //  	  0: no device present
 //
 
-int OWFirst()
+int OWFirst(void)
 {
 	// reset the search state
 	LastDiscrepancy = 0;
@@ -467,7 +461,7 @@ int OWFirst()
 // Return 1: device found, ROM number in ROM_NO buffer
 // 		  0: device not found, end of search
 //
-int OWNext()
+int OWNext(void)
 {
   
 // leave the search state alone
@@ -490,7 +484,7 @@ int OWNext()
 // last search was the last device or there
 // are no devices on the 1-Wire Net.
 //
-int OWSearch()
+int OWSearch(void)
 {
 	char buf[200];
 	int id_bit_number;
@@ -650,10 +644,9 @@ unsigned char DS2482_search_triplet(int search_direction)
 	// checking if 1-Wire busy
 	if(OWBusyWait(NULL) == 1) { return 1; }
     hak[0] = search_direction ? 0x80 : 0x00;
-	//I2C_Write(OWDAddress, OWDSTriplet, 0, 1, hak);
 	SW_I2C_Write_8addr(i2c_bus, OWDAddress, OWDSTriplet, 0, 0);
 	if(OWBusyWait(&status) == 1) { return 1; }
-	//status = OWReadByte(StatReg);
+
 	// return status byte
 	return status;
 }
